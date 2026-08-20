@@ -51,9 +51,9 @@ The current stage focuses on making IdleBox itself better first: preserving flex
 
 | Platform | Status | Notes |
 |----------|--------|-------|
-| Linux | Full | All 53 applets supported |
-| macOS | Full | All 53 applets supported |
-| Windows | Partial | 36+ applets fully supported; Unix-only applets (chmod, chown, chgrp, id, su) gracefully degrade |
+| Linux | Full | All 58 applets supported |
+| macOS | Full | All 58 applets supported |
+| Windows | Partial | 41+ applets fully supported; Unix-only applets (chmod, chown, chgrp, id, su) gracefully degrade |
 
 ---
 
@@ -79,7 +79,7 @@ The current stage focuses on making IdleBox itself better first: preserving flex
 | `touch` | Create empty files or update timestamps | Creates new files, updates mtime/atime on existing files |
 | `head` | Output the first part of files | `-n` lines, `-c` bytes, multi-file with headers, stdin pipe |
 | `tail` | Output the last part of files | `-n` lines, `-c` bytes, ring buffer for efficiency, stdin pipe |
-| `grep` | Search for patterns in files or stdin | `-i` ignore case, `-v` invert, `-n` line numbers, `-c` count |
+| `grep` | Search for patterns in files or stdin | `-i` ignore case, `-v` invert, `-n` line numbers, `-c` count, `-j`/`--threads` parallel multi-threaded search |
 | `chmod` | Change file mode bits | Octal numeric mode, `-R` recursive directory traversal |
 | `chown` | Change file owner and group | POSIX `user[:group]` syntax, `-R` recursive, numeric ID or name |
 | `chgrp` | Change group ownership | Group name or numeric GID, `-R` recursive |
@@ -99,11 +99,16 @@ The current stage focuses on making IdleBox itself better first: preserving flex
 | `gunzip` | Decompress Gzip files | `gzip -d`-compatible file naming and `-k`/`-f`/`-c` behavior |
 | `zcat` | Decompress Gzip data to stdout | Reads `.gz` files or stdin without modifying source files |
 | `unzip` | List and extract ZIP archives | Stored and Deflate entries, `-l`, `-o`, `-d`, CRC validation, Zip Slip protection |
+| `md5sum` | Compute and check MD5 message digest | `-c` verification, `-b`/`-t` binary/text, `--status` quiet check |
+| `sha1sum` | Compute and check SHA1 message digest | `-c` verification, `-b`/`-t` binary/text, `--status` quiet check |
+| `sha256sum` | Compute and check SHA256 message digest | `-c` verification, `-b`/`-t` binary/text, `--status` quiet check |
+| `sha512sum` | Compute and check SHA512 message digest | `-c` verification, `-b`/`-t` binary/text, `--status` quiet check |
+| `b3sum` | Compute and check BLAKE3 message digest | Pure Rust parallelized hash chunking for large files, `-c` check |
 | `uname` | Print system information | POSIX `uname()` FFI, `-a` all, `-s`/`-n`/`-r`/`-v`/`-m` individual fields |
 | `test` / `[` | Evaluate conditional expressions | POSIX-compatible `test` and `[` forms, file/string/numeric tests, logical operators |
 | `expr` | Evaluate expressions and print result | Arithmetic, comparison, logical, string ops; recursive descent parser |
-| `find` | Search for files in a directory hierarchy | Glob `-name`, `-type`, `-maxdepth`, `-empty`; pure Rust traversal |
-| `wc` | Print newline, word, and byte counts | 8 KiB streaming counter, `-l`/`-w`/`-c`/`-m`, multi-file `total`, stdin pipe |
+| `find` | Search for files in a directory hierarchy | Glob `-name`, `-type`, `-maxdepth`, `-empty`, `-j`/`--threads` parallel directory walker; pure Rust traversal |
+| `wc` | Print newline, word, and byte counts | 8 KiB streaming counter, `-l`/`-w`/`-c`/`-m`, `-j`/`--threads` parallel counting, multi-file `total`, stdin pipe |
 | `sort` | Sort lines of text files | `-r` reverse, `-n` numeric, `-u` unique, multi-file merge |
 | `uniq` | Report or omit repeated lines | Constant-memory group processing, optional output file, `-c`/`-d`/`-u`/`-i` |
 | `cut` | Remove sections from each line | `-d` delimiter, `-f` fields, `-c` characters, range support |

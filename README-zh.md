@@ -51,9 +51,9 @@ BusyBox 承载了嵌入式 Linux 的半壁江山。IdleBox 希望以现代语言
 
 | 平台 | 状态 | 说明 |
 |------|------|------|
-| Linux | 完整支持 | 全部 53 个 Applet |
-| macOS | 完整支持 | 全部 53 个 Applet |
-| Windows | 部分支持 | 36+ 个 Applet 完整支持；Unix 专属 Applet（chmod, chown, chgrp, id, su）优雅降级 |
+| Linux | 完整支持 | 全部 58 个 Applet |
+| macOS | 完整支持 | 全部 58 个 Applet |
+| Windows | 部分支持 | 41+ 个 Applet 完整支持；Unix 专属 Applet（chmod, chown, chgrp, id, su）优雅降级 |
 
 ---
 
@@ -79,7 +79,7 @@ BusyBox 承载了嵌入式 Linux 的半壁江山。IdleBox 希望以现代语言
 | `touch` | 创建空文件或更新时间戳 | 创建新文件、更新已有文件的 mtime/atime |
 | `head` | 输出文件的开头部分 | `-n` 行数、`-c` 字节数、多文件标头、stdin 管道 |
 | `tail` | 输出文件的末尾部分 | `-n` 行数、`-c` 字节数、环形缓冲高效读取、stdin 管道 |
-| `grep` | 在文件或 stdin 中搜索模式 | `-i` 忽略大小写、`-v` 反向匹配、`-n` 行号、`-c` 计数 |
+| `grep` | 在文件或 stdin 中搜索模式 | `-i` 忽略大小写、`-v` 反向匹配、`-n` 行号、`-c` 计数、`-j`/`--threads` 并行多线程搜索 |
 | `chmod` | 修改文件权限位 | 八进制数字模式、`-R` 递归目录遍历 |
 | `chown` | 修改文件所有者与组 | POSIX `user[:group]` 语法、`-R` 递归、数字 ID 或名称 |
 | `chgrp` | 修改组所有权 | 组名或数字 GID、`-R` 递归 |
@@ -99,11 +99,16 @@ BusyBox 承载了嵌入式 Linux 的半壁江山。IdleBox 希望以现代语言
 | `gunzip` | 解压 Gzip 文件 | 与 `gzip -d` 一致的文件命名和 `-k`/`-f`/`-c` 行为 |
 | `zcat` | 将 Gzip 数据解压到 stdout | 读取 `.gz` 文件或 stdin，不修改源文件 |
 | `unzip` | 查看与解压 ZIP 归档 | Stored 与 Deflate 条目、`-l`、`-o`、`-d`、CRC 校验与 Zip Slip 防护 |
+| `md5sum` | 计算和校验 MD5 消息摘要 | `-c` 校验、`-b`/`-t` 二进制/文本、`--status` 静默检查 |
+| `sha1sum` | 计算和校验 SHA1 消息摘要 | `-c` 校验、`-b`/`-t` 二进制/文本、`--status` 静默检查 |
+| `sha256sum` | 计算和校验 SHA256 消息摘要 | `-c` 校验、`-b`/`-t` 二进制/文本、`--status` 静默检查 |
+| `sha512sum` | 计算和校验 SHA512 消息摘要 | `-c` 校验、`-b`/`-t` 二进制/文本、`--status` 静默检查 |
+| `b3sum` | 计算和校验 BLAKE3 消息摘要 | 纯自研大文件极致多线程并行分片计算、`-c` 校验 |
 | `uname` | 打印系统信息 | POSIX `uname()` FFI、`-a` 全部信息、`-s`/`-n`/`-r`/`-v`/`-m` 单独字段 |
 | `test` / `[` | 评估条件表达式 | POSIX 兼容的 `test` 和 `[` 两种形态、文件/字符串/数值测试、逻辑运算符 |
 | `expr` | 评估表达式并输出结果 | 算术、比较、逻辑、字符串操作；递归下降解析器 |
-| `find` | 在目录层次结构中搜索文件 | 通配符 `-name`、`-type`、`-maxdepth`、`-empty`；纯 Rust 遍历 |
-| `wc` | 打印换行、单词和字节计数 | 8 KiB 流式计数、`-l`/`-w`/`-c`/`-m`、多文件 `total`、stdin 管道 |
+| `find` | 在目录层次结构中搜索文件 | 通配符 `-name`、`-type`、`-maxdepth`、`-empty`、`-j`/`--threads` 并行目录遍历器；纯 Rust 遍历 |
+| `wc` | 打印换行、单词和字节计数 | 8 KiB 流式计数、`-l`/`-w`/`-c`/`-m`、`-j`/`--threads` 并行计数、多文件 `total`、stdin 管道 |
 | `sort` | 排序文本文件的行 | `-r` 反转、`-n` 数值、`-u` 去重、多文件合并 |
 | `uniq` | 报告或省略重复行 | 常量级分组内存、可选输出文件、`-c`/`-d`/`-u`/`-i` |
 | `cut` | 从每行中移除选定部分 | `-d` 分隔符、`-f` 字段、`-c` 字符、范围支持 |
